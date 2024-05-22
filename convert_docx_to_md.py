@@ -2,8 +2,8 @@ import os
 from docx import Document
 from PIL import Image, ImageDraw, ImageFont
 
-# GitHub Actions의 Ubuntu 환경에서 기본적으로 사용할 수 있는 폰트 경로 설정
-font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+# Noto Sans CJK 폰트 경로 설정
+font_path = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
 font_size = 20
 
 def convert_docx_to_images(docx_file, output_dir):
@@ -49,7 +49,7 @@ def update_md_file(md_file, num_pages, output_dir, base_name):
         f.write(f'# {base_name}\n\n')
         f.write('## Document Pages\n')
         for i in range(num_pages):
-            img_path = f'{output_dir}/{base_name}_page_{i+1}.png'
+            img_path = f'{output_dir}/{base_name}_page_{i+1}.png'.replace(" ", "%20")  # 공백을 %20으로 인코딩
             f.write(f'![Page {i+1}]({img_path})\n')
 
 def main():
