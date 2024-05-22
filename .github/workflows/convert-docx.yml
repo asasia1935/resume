@@ -27,9 +27,14 @@ jobs:
         run: python convert_docx_to_md.py
 
       - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USER_NAME: ${{ secrets.USER_NAME }}
+          USER_EMAIL: ${{ secrets.USER_EMAIL }}
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git config --global user.name "${{ env.USER_NAME }}"
+          git config --global user.email "${{ env.USER_EMAIL }}"
+          git pull origin main  # 원격 저장소의 변경 사항을 가져옴
           git add *.md output_images/*.png
           git commit -m "Update markdown files from docx files"
           git push
